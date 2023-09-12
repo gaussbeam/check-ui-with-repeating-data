@@ -29,12 +29,22 @@ struct ContentView: View {
                     .font(.callout)
                     .lineLimit(1)
                     .foregroundColor(.secondary)
+//                Text(listItemData.date)
+//                    .font(.callout)
+//                    .lineLimit(1)
+//                    .foregroundColor(.secondary)
             }
             Spacer()
-            Text(listItemData.value)
-                .font(.callout)
-                .lineLimit(1)
-                .foregroundColor(.primary)
+            VStack(alignment: .trailing) {
+                Text(listItemData.value)
+                    .font(.callout)
+                    .lineLimit(1)
+                    .foregroundColor(.primary)
+//                Color.blue
+//                    .frame(width: 40.0, height: listItemData.height)
+//                    .cornerRadius(4.0)
+//                    .opacity(listItemData.opacity)
+            }
         }
     }
 }
@@ -43,6 +53,9 @@ struct ListItemData {
     var title: String
     var description: String
     var value: String
+    var date: String
+    var height: CGFloat
+    var opacity: Double
 }
 
 struct ContentView_Previews: PreviewProvider {
@@ -52,11 +65,22 @@ struct ContentView_Previews: PreviewProvider {
     
     static var previewList: [ListItemData] {
         var list = [ListItemData]()
-        for i in 0..<9 {
+        let formatter = DateFormatter()
+        formatter.timeStyle = .none
+        formatter.dateStyle = .medium
+        let length = 10
+        for i in 0...length {
+            let date = Date(timeIntervalSinceNow: TimeInterval(60*60*24*28*i))
             let data = ListItemData(
                 title: String(repeating: "this is title", count: i),
                 description: String(repeating: "description", count: i),
-                value: "\(pow(10, i))"
+                value: "\(pow(10, i))",
+                date: formatter.string(from: date),
+                height: CGFloat(i),
+//                height: CGFloat(i*4%20+8),
+                opacity: 1.0
+//                opacity: Double(i)/Double(length)
+//                opacity: Double(i%4)/Double(4)
             )
             list.append(data)
         }
